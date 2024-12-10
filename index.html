@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Diet Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    width: 40%;
+    margin: 50px auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    overflow: hidden;
+}
+
+#chatbox {
+    flex: 1;
+    overflow-y: scroll;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-log {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #eeeeee;
+    border-top: 1px solid #cccccc;
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+#send-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#send-btn:hover {
+    background-color: #0056b3;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 20px;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 16px;
+}
+
+.user-message {
+    background-color: #d1f4d6; /* Light green for user */
+    align-self: flex-end;
+    border: 1px solid #0f7c43;
+    color: #0f7c43;
+}
+
+.bot-message {
+    background-color: #ffeeba; /* Light yellow for bot */
+    align-self: flex-start;
+    border: 1px solid #b59625;
+    color: #b59625;
+}
+#voice-btn{
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        #voice-btn {
+            background-color: #ff5722;
+        }
+
+/* Adding some smoother transitions */
+.chat-message {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ /* Media query for smaller screens (up to 600px) */
+@media (max-width: 800px) {
+    .chat-container {
+        width:100%;
+        max-width: 100%;
+        padding: 5px;
+    }
+
+    #chatbox {
+        height: 250px;
+    }
+
+    .input-container {
+        padding: 5px;            /* Reduced padding */
+        gap: 5px;                /* Increased gap between elements */
+        height: 50px;            /* Fixed height for input container */
+        flex-wrap: wrap;         /* Allows wrapping if space is limited */
+        justify-content: space-between; /* Space buttons effectively */
+        align-items: center;     /* Vertically center buttons */
+    }
+
+    input[type="text"] {
+        padding: 5px;            /* Smaller padding for input */
+        font-size: 12px;         /* Smaller font size */
+        flex-grow: 1;            /* Take up remaining space */
+        min-width: 55%;          /* Adjust width to leave room for buttons */
+    }
+
+    /* Show the send text button with text aligned to the left */
+    #send-btn {
+    display: inline-flex;           /* Make it inline-flex so we can align the text */
+    padding: 4px 4px;              /* Add some padding for the button */
+    font-size: 14px;                /* Adjust font size (increase it for better visibility) */
+    align-items: center;            /* Align text vertically */
+    width: auto;                    /* Allow button width to adjust to the content */
+    background-color: #4CAF50;      /* Button background color */
+    color: white;                   /* Button text color */
+    border: none;                   /* Remove border */
+    border-radius: 5px;             /* Round corners */
+}
+
+#send-btn i {
+    font-size: 16px;                /* Adjust icon size (if you have an icon inside the button) */
+    margin-right: 8px;              /* Space between the icon and the text */
+}
+
+    #send-icon-btn {
+        display: none; /* Hide the icon button for this size */
+    }
+
+    /* Adjust voice button for smaller screens */
+    #voice-btn {
+        font-size: 18px;       /* Larger font size for better visibility */
+        padding: 5px;         /* Adjust padding */
+        width: 20px;           /* Set width */
+        height: 20px;          /* Set height */
+        display: flex;         /* Flexbox for centering the icon */
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Media query for even smaller screens (up to 400px) */
+@media (max-width: 1272px) {
+    .chat-container {
+        width:100%;
+        max-width: 100%;
+        padding: 5px;
+    }
+    #chatbox {
+        height: 200px;
+    }
+
+    .input-container {
+        padding: 3px;            /* Further reduce padding */
+        gap: 3px;                /* Further reduce gap */
+        height: 45px;            /* Adjust height for very small screens */
+        flex-wrap: wrap;         /* Allow wrapping if needed */
+    }
+
+    input[type="text"] {
+        padding: 4px;            /* Further reduce padding */
+        font-size: 10px;         /* Smaller font size */
+        flex-grow: 1;            /* Take up remaining space */
+        min-width: 50%;          /* Adjust width for input */
+    }
+
+    #send-btn {
+        padding: 4px 8px;        /* Further reduce padding */
+        font-size: 10px;         /* Smaller font size */
+        width: auto;             /* Let width auto adjust */
+        align-items: center;     /* Center text vertically */
+        justify-content: flex-start; /* Align text to the left */
+    }
+
+    #send-btn i {
+        font-size: 12px;         /* Smaller icon size */
+        margin-right: 5px;       /* Space between the icon and text */
+    }
+
+    #voice-btn {
+        font-size: 16px;         /* Smaller icon for voice button */
+        width: 35px;             /* Set width */
+        height: 35px;            /* Set height */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chatbox">
+            <div id="chat-log"></div>
+        </div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="ask about food item...">
+            <button id="voice-btn">🎤</button>
+            <button id="send-btn">send</button>
+            <button id="send-icon-btn" style="display:none;">
+                <i class="fas fa-paper-plane"></i> <!-- Font Awesome send icon -->
+            </button>
+        </div>
+    </div>
+    <script>
+        // Initialize Speech Recognition
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        // Voice button activates speech recognition
+        document.getElementById('voice-btn').addEventListener('click', () => {
+            recognition.start();
+        });
+
+        recognition.addEventListener('result', (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('user-input').value = transcript;
+            addMessageToChat(transcript, 'user');
+            fetchNutritionData(transcript);
+        });
+
+        recognition.addEventListener('end', () => recognition.stop());
+document.getElementById('send-btn').addEventListener('click', function() {
+    const userInput = document.getElementById('user-input').value;
+    if (userInput.trim() !== "") {
+        addMessageToChat(userInput, 'user');
+        fetchNutritionData(userInput);
+        document.getElementById('user-input').value = "";
+    }
+});
+
+function addMessageToChat(message, sender) {
+    const chatLog = document.getElementById('chat-log');
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('chat-message', `${sender}-message`);
+    messageDiv.textContent = message;
+    chatLog.appendChild(messageDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+async function fetchNutritionData(query) {
+    try {
+        const apiKey = 'aNo7EFic2gaYE8R1YgbxpA==KLxIdtSPUnD5XPkX'; // Replace with your CalorieNinjas API key
+        const apiUrl = `https://api.calorieninjas.com/v1/nutrition?query=${query}`;
+        const response = await fetch(apiUrl, {
+            headers: {
+                'X-Api-Key': apiKey
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.items.length > 0) {
+                const nutritionInfo = data.items[0];
+                const responseMessage = `Food: ${nutritionInfo.name}
+Calories: ${nutritionInfo.calories} kcal
+Carbohydrates: ${nutritionInfo.carbohydrates_total_g} g
+Proteins: ${nutritionInfo.protein_g} g
+Fat: ${nutritionInfo.fat_total_g} g
+Fiber: ${nutritionInfo.fiber_g} g
+Sugar: ${nutritionInfo.sugar_g} g`;
+                addMessageToChat(responseMessage, 'bot');
+            } else {
+                addMessageToChat("Sorry, I couldn't find any nutrition information on that food.", 'bot');
+            }
+        } else {
+            addMessageToChat("Error fetching data from the API.", 'bot');
+        }
+    } catch (error) {
+        addMessageToChat("There was an error connecting to the API.", 'bot');
+    }
+}
+    </script>
+</body>
+</html>
